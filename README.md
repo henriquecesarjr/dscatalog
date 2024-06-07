@@ -6,7 +6,7 @@
 O projeto consiste em um sistema de catálogo de produtos, onde o objetivo é estruturar um projeto completo com camadas, boas práticas, validação, segurança, tratamento de exceções, consultas ao banco de dados, testes automatizados, dentre outros recursos. 
 
 ## Modelo conceitual
-![Modelo Conceitual]()
+![Modelo Conceitual](https://github.com/henriquecesarjr/dscatalog/blob/main/backend/assets/dscatalog.png)
 
 # Tecnologias utilizadas
 - Java
