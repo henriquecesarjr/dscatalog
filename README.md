@@ -1,5 +1,5 @@
 # DSCatalog
-[![NPM](https://img.shields.io/npm/l/react)]()
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/henriquecesarjr/dscatalog/blob/main/LICENSE)
 
 # Sobre o projeto
 
