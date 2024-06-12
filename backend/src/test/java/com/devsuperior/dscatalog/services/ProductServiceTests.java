@@ -3,6 +3,7 @@ package com.devsuperior.dscatalog.services;
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.entities.Product;
+import com.devsuperior.dscatalog.projections.ProductProjection;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
 import com.devsuperior.dscatalog.repositories.ProductRepository;
 import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
@@ -26,8 +27,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.mockito.Mockito.*;
 
@@ -61,7 +65,7 @@ public class ProductServiceTests {
         productDTO = Factory.createProductDTO();
         page = new PageImpl<>(List.of(product));
 
-        when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
+        //when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
 
         when(repository.getReferenceById(existingId)).thenReturn(product);
         when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
@@ -135,11 +139,16 @@ public class ProductServiceTests {
     public void findAllPagedShouldReturnPage() {
 
         Pageable pageable = PageRequest.of(0, 10);
+        String name = "";
+        String categoryId = "";
 
-        Page<ProductDTO> result = service.findAllPaged(pageable);
+        Page<ProductDTO> result = service.findAllPaged("", "1", pageable);
+        List<Long> categoryIds = Stream.of(categoryId.split(","))
+                .map(Long::parseLong)
+                .collect(Collectors.toList());
 
         Assertions.assertNotNull(result);
-        verify(repository, times(1)).findAll(pageable);
+        verify(repository, times(1)).searchProducts(categoryIds, name,  pageable);
 
     }
 
