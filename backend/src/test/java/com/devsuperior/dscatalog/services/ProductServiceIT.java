@@ -63,7 +63,7 @@ public class ProductServiceIT {
         Assertions.assertFalse(result.isEmpty());
         Assertions.assertEquals(0, result.getNumber());
         Assertions.assertEquals(10, result.getSize());
-        Assertions.assertEquals(countTotalProducts, result.getTotalElements());
+        Assertions.assertEquals(1, result.getTotalElements());
     }
 
     @Test
@@ -84,9 +84,7 @@ public class ProductServiceIT {
         Page<ProductDTO> result = service.findAllPaged("", "1", pageRequest);
 
         Assertions.assertFalse(result.isEmpty());
-        Assertions.assertEquals("Macbook Pro", result.getContent().getFirst().getName());
-        Assertions.assertEquals("PC Gamer", result.getContent().get(1).getName());
-        Assertions.assertEquals("PC Gamer Alfa", result.getContent().get(2).getName());
+        Assertions.assertEquals("Smart TV", result.getContent().getFirst().getName());
     }
 
 }

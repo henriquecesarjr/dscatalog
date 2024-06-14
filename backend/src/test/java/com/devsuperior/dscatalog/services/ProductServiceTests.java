@@ -27,6 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -66,6 +67,11 @@ public class ProductServiceTests {
         page = new PageImpl<>(List.of(product));
 
         //when(repository.findAll((Pageable) ArgumentMatchers.any())).thenReturn(page);
+        Page<ProductProjection> page = new PageImpl<>(new ArrayList<>());
+        when(repository.searchProducts(anyList(), anyString(), any(Pageable.class))).thenReturn(page);
+
+        List<Product> products = new ArrayList<>();
+        when(repository.searchProductsWithCategories(anyList())).thenReturn(products);
 
         when(repository.getReferenceById(existingId)).thenReturn(product);
         when(repository.getReferenceById(nonExistingId)).thenThrow(EntityNotFoundException.class);
@@ -140,9 +146,9 @@ public class ProductServiceTests {
 
         Pageable pageable = PageRequest.of(0, 10);
         String name = "";
-        String categoryId = "";
+        String categoryId = "1";
 
-        Page<ProductDTO> result = service.findAllPaged("", "1", pageable);
+        Page<ProductDTO> result = service.findAllPaged(name, categoryId, pageable);
         List<Long> categoryIds = Stream.of(categoryId.split(","))
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
